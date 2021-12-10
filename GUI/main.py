@@ -18,6 +18,7 @@ def get_num():
             raise ValueError
         global phone
         phone = int(raw_n)
+        err=False
 
     except:
         err=True
@@ -25,27 +26,32 @@ def get_num():
 
 def get_mes():
     global mes
-    mes=message.get()
-    if len(mes)==0:
+    raw_mes=message.get()
+    if len(raw_mes)==0:
         messagebox.showerror("Error", "Message can't be empty")
         global err
         err=True
         raise ValueError
-
+    else:
+        mes=raw_mes
+        err=False
 def get_cou():
     try:
         global cou
         cou = count.get()
         if len(cou)==0:
             messagebox.showerror("Error", "Message count cant be empty")
-            raise ValueError
+            raise TypeError
+        cou=int(cou)
         if cou<= 0:
-            messagebox.showerror("Error", "Message count cant be zero")
+            messagebox.showerror("Error", "Message count can't be zero")
             global err
             err=True
-            raise ValueError
+            raise TypeError
+        else:
             
-    except:
+            err=False
+    except ValueError:
         err=True
         messagebox.showerror("Error", "Message count must be a number")
 
@@ -71,7 +77,7 @@ def btn_clicked():
                 n+=1
                 print(n, " sent")
             messagebox.showinfo("Success", "Process completed")
-    except:
+    except ValueError:
         messagebox.showerror("Error", "Something Went Wrong")
 
 window = Tk()
